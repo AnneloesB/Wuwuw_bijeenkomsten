@@ -56,6 +56,8 @@
   .btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; border-radius: 7px; font-size: 12px; font-weight: 600; cursor: pointer; border: none; font-family: inherit; transition: all 0.15s; }
   .btn-dl { background: var(--green-dark); color: #fff; width: 100%; justify-content: center; margin-top: 8px; }
   .btn-dl:hover { background: #374514; }
+  .btn-mail { background: #2563a8; color: #fff; width: 100%; justify-content: center; margin-top: 6px; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+  .btn-mail:hover { background: #1a4a80; }
   .btn-clear { background: var(--gray-100); color: var(--gray-600); font-size: 11px; padding: 4px 10px; margin-top: 6px; }
   .btn-clear:hover { background: var(--gray-200); }
 
@@ -144,6 +146,7 @@
         </div>
         <input type="file" id="file-input" accept=".csv"/>
         <button class="btn btn-dl" onclick="downloadTemplate()">&#8595; Download CSV-template</button>
+        <a class="btn btn-mail" href="mailto:bork.anneloes@gmail.com?subject=weet%20u%20wat%20u%20wilt%20bijeenkomsten%20aankomende&body=Ha%20Anneloes%2C%0A%0AHierbij%20stuur%20ik%20mijn%20CSV-bestand%20met%20de%20geplande%20TA-bijeenkomsten.%20Zie%20bijlage.%0A%0AGroeten,%20">&#9993; Stuur bijeenkomsten naar Anneloes</a>
         <div class="stat-row" id="l2-stats" style="display:none; margin-top:8px;">
           <div class="sc"><div class="v" id="l2s1">0</div><div class="l">Rijen</div></div>
           <div class="sc"><div class="v" id="l2s2">0</div><div class="l">Geplot</div></div>
