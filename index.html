@@ -516,7 +516,7 @@ function handleFile(file) {
   geoQueue = [];
 
   Papa.parse(file, {
-    header: true, skipEmptyLines: true,
+    header: true, skipEmptyLines: true, comments: '#',
     complete: results => {
       const rows = results.data;
       log(`${rows.length} rijen ingelezen`, 'linf');
