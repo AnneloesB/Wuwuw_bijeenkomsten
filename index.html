@@ -24,6 +24,7 @@
     --c25: #D97706;
     --c26: #16A34A;
     --cta: #7c3aed;
+    --toekomst: #d97706;
     --radius: 10px;
     --shadow: 0 2px 12px rgba(70,87,27,0.10);
     --shadow-lg: 0 8px 32px rgba(70,87,27,0.14);
@@ -132,6 +133,10 @@
 
       <div class="sec">
         <div class="sec-title">Filter op jaar</div>
+        <div id="jaar-quick" style="display:flex; gap:6px; margin-bottom:8px;">
+          <button class="btn btn-clear" onclick="selectOnlyYear('2026')">Alleen 2026</button>
+          <button class="btn btn-clear" onclick="selectAllYears()">Alle jaren</button>
+        </div>
         <div id="jaar-wrap"></div>
         <div class="filter-note" id="jaar-note">Alle jaren zichtbaar</div>
       </div>
@@ -167,7 +172,8 @@
           <div class="li"><span class="ld" style="background:var(--c25)"></span> 2025</div>
           <div class="li"><span class="ld" style="background:var(--c26)"></span> 2026</div>
           <div class="li-sep" style="margin-top:6px">Geplande TA-bijeenkomsten</div>
-          <div class="li"><span class="ld star" style="background:var(--cta)"></span> TA-bijeenkomst (gepland)</div>
+          <div class="li"><span class="ld star" style="background:var(--cta)"></span> TA-bijeenkomst (gepland, via CSV)</div>
+          <div class="li"><span class="ld star" style="background:var(--toekomst)"></span> TA-bijeenkomst (toekomstig, vastgelegd in code)</div>
           <div class="li" style="font-size:11px;color:var(--gray-400);margin-top:2px">Grootte pin = aantal aanmeldingen / plekken</div>
         </div>
       </div>
@@ -200,7 +206,15 @@ const REGIO_COLORS = {
 };
 const JCOLORS = {"2021":"#be185d","2022":"#b45309","2023":"#0f766e","2024":"#2563EB","2025":"#D97706","2026":"#16A34A","onbekend":"#64748b"};
 const TA_COLOR = "#7c3aed";
+const TOEKOMST_COLOR = "#d97706";
 const getR = n => Math.max(7, Math.min(24, 5 + Math.sqrt(n) * 1.1));
+
+// ======= TOEKOMSTIGE TA-BIJEENKOMSTEN (vastgelegd in code, nog niet gehouden) =======
+const TOEKOMST_DATA = [
+  {organisatie:"Zonnehuis, QuaRijn", adres:"Zonnehuis 3, 3941RB Doorn", gemeente:"Doorn", regio:"Utrecht Zuid Oost", plekken:"75", datum:"14 september 2026", contact:"Susanne van Loenhout"},
+  {organisatie:"Bunninchem", adres:"Burg. Van de Weijerstraat 26, 3981 EJ Bunnik", gemeente:"Bunnik", regio:"Utrecht Zuid Oost", plekken:"75", datum:"21 september 2026", contact:"Susanne van Loenhout"},
+  {organisatie:"Ewoud & Elisabeth Gasthuis", adres:"Gansfortstraat 4, 3961 CR Wijk bij Duurstede", gemeente:"Wijk bij Duurstede", regio:"Utrecht Zuid Oost", plekken:"75", datum:"29 september 2026", contact:"Susanne van Loenhout"}
+];
 
 // ======= KAART =======
 const map = L.map('map', {center:[52.09, 5.12], zoom:9});
@@ -212,9 +226,12 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
 // ======= LAAG GROEPEN =======
 const layer1 = L.layerGroup().addTo(map);
 const layer2 = L.layerGroup().addTo(map);
+const layer3 = L.layerGroup().addTo(map);
 
 // Bewaar alle laag-1 markers met hun regio voor filtering
 const l1Markers = []; // {regio, markers: [leafletMarker, ...]}
+// Bewaar de toekomstige TA-bijeenkomsten (laag 3) met hun regio voor filtering
+const l3Markers = []; // {regio, marker}
 
 // ======= HULPFUNCTIES =======
 function makeCircleMarker(lat, lon, radius, color, popup) {
@@ -294,6 +311,18 @@ function buildL2Popup(item) {
     <div class="prow"><span class="plab">Aantal plekken</span><span class="pval">${item.plekken||'&mdash;'}</span></div>`;
 }
 
+function buildToekomstPopup(item) {
+  const regio = item.regio || 'Onbekend';
+  return `<div class="pt">${item.gemeente||'Onbekend'}</div>
+    <div class="psub">${regioBadge(regio)}</div>
+    <span class="pb-year" style="background:${TOEKOMST_COLOR}">Toekomstige bijeenkomst</span>
+    <div class="prow"><span class="plab">Datum</span><span class="pval">${item.datum||'&mdash;'}</span></div>
+    <div class="prow"><span class="plab">Adres</span><span class="pval">${item.adres||'&mdash;'}</span></div>
+    <div class="prow"><span class="plab">Organisatie</span><span class="pval">${item.organisatie||'&mdash;'}</span></div>
+    <div class="prow"><span class="plab">Contactpersoon</span><span class="pval">${item.contact||'&mdash;'}</span></div>
+    <div class="prow"><span class="plab">Aantal plekken</span><span class="pval">${item.plekken||'&mdash;'}</span></div>`;
+}
+
 // ======= LAAG 1 OPBOUWEN =======
 L1_DATA.forEach(marker => {
   const jaren = Object.keys(marker.per_jaar);
@@ -350,6 +379,23 @@ function updateJaarNote() {
   }
 }
 
+function selectOnlyYear(jaar) {
+  activeJaren = new Set([jaar]);
+  document.querySelectorAll('.jp').forEach(btn => {
+    if (btn.dataset.jaar === jaar) btn.classList.remove('off');
+    else btn.classList.add('off');
+  });
+  updateJaarNote();
+  applyFilters();
+}
+
+function selectAllYears() {
+  activeJaren = new Set(alleJaren);
+  document.querySelectorAll('.jp').forEach(btn => btn.classList.remove('off'));
+  updateJaarNote();
+  applyFilters();
+}
+
 // ======= REGIO FILTER OPBOUWEN =======
 const regios = [...new Set(L1_DATA.map(m => m.regio))].sort((a, b) => {
   const order = ["Eemland","Utrecht (stad)","Utrecht Zuid Oost","Utrecht-West","Lekstroom","Buiten regio","Heel regio"];
@@ -394,6 +440,12 @@ function filterRegio(btn) {
     const cnt = l1Markers.filter(i => i.regio === regio).length;
     note.textContent = `${cnt} locatie${cnt !== 1 ? 's' : ''} in ${regio}`;
   }
+
+  l3Markers.forEach(item => {
+    const visible = regio === 'alle' || item.regio === regio;
+    if (visible) { if (!layer3.hasLayer(item.marker)) layer3.addLayer(item.marker); }
+    else { if (layer3.hasLayer(item.marker)) layer3.removeLayer(item.marker); }
+  });
 
   applyFilters();
 
@@ -448,6 +500,21 @@ async function geocode(adres, gemeente) {
     return null;
   } catch(e) { return null; }
 }
+
+// ======= LAAG 3 OPBOUWEN (toekomstige bijeenkomsten uit code) =======
+async function buildToekomstLayer() {
+  for (const item of TOEKOMST_DATA) {
+    const coords = await geocode(item.adres, item.gemeente);
+    await new Promise(r => setTimeout(r, 1100));
+    if (!coords) { log(`Toekomstige bijeenkomst niet gevonden: ${item.adres}`, 'lwrn'); continue; }
+    const popup = buildToekomstPopup(item);
+    const radius = getR(parseInt(item.plekken) || 10);
+    const m = makeStarMarker(coords.lat, coords.lon, radius, TOEKOMST_COLOR, popup);
+    l3Markers.push({regio: item.regio, marker: m});
+    if (activeRegio === 'alle' || item.regio === activeRegio) m.addTo(layer3);
+  }
+}
+buildToekomstLayer();
 
 // Eenvoudige gemeente -> regio mapping voor laag 2
 const GEMEENTE_REGIO = {
