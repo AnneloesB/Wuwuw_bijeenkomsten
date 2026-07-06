@@ -341,13 +341,14 @@ L1_DATA.forEach(marker => {
 
 // ======= JAAR FILTER OPBOUWEN =======
 const alleJaren = [...new Set(L1_DATA.flatMap(m => Object.keys(m.per_jaar)))].sort();
-let activeJaren = new Set(alleJaren); // standaard alle aan
+let activeJaren = new Set(alleJaren.filter(j => parseInt(j) >= 2026)); // standaard alleen 2026 (en latere jaren)
 
 const jaarWrap = document.getElementById('jaar-wrap');
 alleJaren.forEach(jaar => {
   const col = JCOLORS[jaar] || '#64748b';
   const btn = document.createElement('button');
   btn.className = 'jp';
+  if (!activeJaren.has(jaar)) btn.classList.add('off');
   btn.dataset.jaar = jaar;
   btn.style.borderColor = col;
   btn.style.color = col;
@@ -355,6 +356,7 @@ alleJaren.forEach(jaar => {
   btn.onclick = () => toggleJaar(btn, jaar);
   jaarWrap.appendChild(btn);
 });
+updateJaarNote();
 
 function toggleJaar(btn, jaar) {
   if (activeJaren.has(jaar)) {
@@ -642,6 +644,9 @@ function downloadTemplate() {
   a.href = url; a.download = 'TPZ_TA_bijeenkomsten_template.csv';
   a.click(); URL.revokeObjectURL(url);
 }
+
+// Standaard filter toepassen (alleen 2026+ zichtbaar bij laden)
+applyFilters();
 </script>
 </body>
 </html>
