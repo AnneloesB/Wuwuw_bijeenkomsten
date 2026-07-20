@@ -36,6 +36,8 @@
   .logo { width: 32px; height: 32px; border-radius: 50%; background: var(--green-mid); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; }
   header h1 { font-family: 'DM Serif Display', serif; font-size: 17px; font-weight: 400; }
   header p { font-size: 11px; opacity: 0.55; margin-top: 1px; }
+  .btn-stappenplan { margin-left: auto; flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px; background: var(--yellow); color: var(--green-dark); font-weight: 600; font-size: 12.5px; padding: 8px 14px; border-radius: 20px; text-decoration: none; transition: background 0.15s; }
+  .btn-stappenplan:hover { background: #e0d06e; }
   #main { display: flex; flex: 1; min-height: 0; overflow: hidden; }
   #sidebar { width: 300px; flex-shrink: 0; background: #fff; border-right: 1px solid var(--gray-200); overflow-y: auto; display: flex; flex-direction: column; }
   .sec { padding: 13px 15px; border-bottom: 1px solid var(--gray-100); }
@@ -107,6 +109,9 @@
       <h1>Weet u wat u wilt &mdash; Bijeenkomsten Kaart</h1>
       <p>Transformatie Palliatieve Zorg Midden-Nederland &nbsp;&bull;&nbsp; Opgesteld door Anneloes Bork</p>
     </div>
+    <a class="btn-stappenplan" href="https://toolkit-mb-tpz.netlify.app/weet-u-wat-u-wilt/" target="_blank" rel="noopener">
+      Zelf organiseren? Bekijk het stappenplan &rarr;
+    </a>
   </header>
   <div id="main">
     <div id="sidebar">
@@ -221,7 +226,14 @@ const TOEKOMST_DATA = [
   {organisatie:"De Keiler", adres:"Nunspeet", gemeente:"Nunspeet", regio:"Noordwest Veluwe", plekken:"", datum:"24 september 2026", contact:""},
   {organisatie:"Inner Wheel Service Club", adres:"Nijkerk", gemeente:"Nijkerk", regio:"Noordwest Veluwe", plekken:"", datum:"9 november 2026", contact:""},
   {organisatie:"", adres:"Harderwijk", gemeente:"Harderwijk", regio:"Noordwest Veluwe", plekken:"", datum:"30 november 2026", contact:"Bredeweg en van Hulst"},
-  {organisatie:"UMC Utrecht", adres:"Heidelberglaan 100, 3584 CX Utrecht", gemeente:"Utrecht", regio:"Utrecht (stad)", plekken:"", datum:"7 oktober 2026", contact:"Charlotte Bel"}
+  {organisatie:"UMC Utrecht", adres:"Heidelberglaan 100, 3584 CX Utrecht", gemeente:"Utrecht", regio:"Utrecht (stad)", plekken:"", datum:"7 oktober 2026", contact:"Charlotte Bel"},
+  {organisatie:"Vijverzaal van Puntenburg", adres:"Puntenburgerlaan 100, Amersfoort", gemeente:"Amersfoort", regio:"Eemland", plekken:"", datum:"8 september 2026, 15:00-16:30 (inloop vanaf 14:30)", contact:""},
+  {organisatie:"Koperhorst", adres:"Paladijnenweg 275, 3813 KA Amersfoort", gemeente:"Amersfoort", regio:"Eemland", plekken:"", datum:"10 september 2026, 14:00-16:00 (inloop vanaf 13:30)", contact:""},
+  {organisatie:"Boogkerk (huisartsenpraktijken Nieuwland en Watersteeg)", adres:"Watersteeg 2, 3824 EM Amersfoort", gemeente:"Amersfoort", regio:"Eemland", plekken:"", datum:"22 september 2026, 15:00-17:00 (inloop vanaf 14:30)", contact:""},
+  {organisatie:"Kerk en Samenleving Zeist", adres:"De Clomp 3302, 3704 KB Zeist", gemeente:"Zeist", regio:"Utrecht Zuid Oost", plekken:"", datum:"25 september 2026, 15:00-17:00 (inloop vanaf 14:30)", contact:""},
+  {organisatie:"De Breehoek (huisartsenpraktijk de Vlieter)", adres:"Marktstraat 59, Scherpenzeel", gemeente:"Scherpenzeel", regio:"Eemland", plekken:"", datum:"8 oktober 2026, 15:00-16:45 (inloop vanaf 14:30)", contact:""},
+  {organisatie:"Parochiezaal St. Joseph", adres:"Van Tuyllstraat, 3829 AB Hooglanderveen", gemeente:"Hooglanderveen", regio:"Eemland", plekken:"", datum:"12 oktober 2026, 15:00-17:00 (inloop vanaf 14:30)", contact:""},
+  {organisatie:"De Moespot (huisartsenpraktijk Achterveld, Café Doodgewoon)", adres:"Jan van Arkelweg 6, Achterveld", gemeente:"Achterveld", regio:"Eemland", plekken:"", datum:"17 november 2026, 15:00-17:00 (inloop vanaf 14:45)", contact:""}
 ];
 
 // ======= KAART =======
