@@ -219,7 +219,7 @@ const getR = n => Math.max(7, Math.min(24, 5 + Math.sqrt(n) * 1.1));
 const TOEKOMST_DATA = [
   {organisatie:"Zonnehuis, QuaRijn", adres:"Zonnehuis 3, 3941RB Doorn", gemeente:"Doorn", regio:"Utrecht Zuid Oost", plekken:"75", datum:"14 september 2026", contact:"Susanne van Loenhout"},
   {organisatie:"Bunninchem", adres:"Burg. Van de Weijerstraat 26, 3981 EJ Bunnik", gemeente:"Bunnik", regio:"Utrecht Zuid Oost", plekken:"75", datum:"21 september 2026", contact:"Susanne van Loenhout"},
-  {organisatie:"Ewoud & Elisabeth Gasthuis", adres:"Gansfortstraat 4, 3961 CR Wijk bij Duurstede", gemeente:"Wijk bij Duurstede", regio:"Utrecht Zuid Oost", plekken:"75", datum:"29 september 2026", contact:"Susanne van Loenhout"},
+  {organisatie:"Ewoud & Elisabeth Gasthuis", adres:"Gansfortstraat 4, 3961 CR Wijk bij Duurstede", gemeente:"Wijk bij Duurstede", regio:"Utrecht Zuid Oost", plekken:"75", datum:"26 oktober 2026 (nieuwe datum), 19:00-21:00 (inloop vanaf 18:30)", contact:"Susanne van Loenhout"},
   {organisatie:"Schothorst Koppel", adres:"Schothorst, Amersfoort", gemeente:"Amersfoort", regio:"Eemland", plekken:"", datum:"10 september 2026", contact:"Gerdien du Mortier"},
   {organisatie:"Oost voor elkaar", adres:"Oost, Utrecht", gemeente:"Utrecht", regio:"Utrecht (stad)", plekken:"", datum:"Datum nog niet bekend", contact:"Anja van der Aa"},
   {organisatie:"", adres:"Breukelen", gemeente:"Breukelen", regio:"Utrecht-West", plekken:"", datum:"Datum nog niet bekend", contact:"Hanneke Andriesse"},
@@ -231,11 +231,17 @@ const TOEKOMST_DATA = [
   {organisatie:"Koperhorst", adres:"Paladijnenweg 275, 3813 KA Amersfoort", gemeente:"Amersfoort", regio:"Eemland", plekken:"", datum:"10 september 2026, 14:00-16:00 (inloop vanaf 13:30)", contact:""},
   {organisatie:"Boogkerk (huisartsenpraktijken Nieuwland en Watersteeg)", adres:"Watersteeg 2, 3824 EM Amersfoort", gemeente:"Amersfoort", regio:"Eemland", plekken:"", datum:"22 september 2026, 15:00-17:00 (inloop vanaf 14:30)", contact:""},
   {organisatie:"Kerk en Samenleving Zeist", adres:"De Clomp 3302, 3704 KB Zeist", gemeente:"Zeist", regio:"Utrecht Zuid Oost", plekken:"", datum:"25 september 2026, 15:00-17:00 (inloop vanaf 14:30)", contact:""},
-  {organisatie:"De Breehoek (huisartsenpraktijk de Vlieter)", adres:"Marktstraat 59, Scherpenzeel", gemeente:"Scherpenzeel", regio:"Eemland", plekken:"", datum:"8 oktober 2026, 15:00-16:45 (inloop vanaf 14:30)", contact:""},
-  {organisatie:"Parochiezaal St. Joseph", adres:"Van Tuyllstraat, 3829 AB Hooglanderveen", gemeente:"Hooglanderveen", regio:"Eemland", plekken:"", datum:"12 oktober 2026, 15:00-17:00 (inloop vanaf 14:30)", contact:""},
+  {organisatie:"De Breehoek (huisartsenpraktijk de Vlieter)", adres:"Marktstraat 59, Scherpenzeel", gemeente:"Scherpenzeel", regio:"Eemland", plekken:"", datum:"8 oktober 2026, 15:00-17:00 (inloop vanaf 14:30) — VOL, reservelijst", contact:""},
+  {organisatie:"Parochiezaal St. Joseph", adres:"Van Tuyllstraat 29, 3829 AB Hooglanderveen", gemeente:"Hooglanderveen", regio:"Eemland", plekken:"", datum:"12 oktober 2026, 15:00-17:00 (inloop vanaf 14:30)", contact:""},
   {organisatie:"De Moespot (huisartsenpraktijk Achterveld, Café Doodgewoon)", adres:"Jan van Arkelweg 6, Achterveld", gemeente:"Achterveld", regio:"Eemland", plekken:"", datum:"17 november 2026, 15:00-17:00 (inloop vanaf 14:45)", contact:""},
-  {organisatie:"Zorgspectrum", adres:"Het Kant 193, 3995 GZ Houten", gemeente:"Houten", regio:"Lekstroom", plekken:"20", datum:"6 oktober 2026", contact:"Tessa Augustijn (t.augustijn@zorgspectrum.nl)"},
-  {organisatie:"Theaterzaal de Proloog", adres:"Allemanswaard 27, 3958 KA Amerongen", gemeente:"Amerongen", regio:"Utrecht Zuid Oost", plekken:"", datum:"6 oktober 2026, 19:00-21:00 (inloop vanaf 18:30)", contact:"W. Smelt (w.smelt@hpamerongen.nl), E. van den Berg (el.vandenberg@charim.nl)"}
+  {organisatie:"Grand Café Haltna Huis, ZorgSpectrum", adres:"Het Kant 193, 3995 GZ Houten", gemeente:"Houten", regio:"Lekstroom", plekken:"20", datum:"8 oktober 2026, 19:15-21:15 (inloop vanaf 18:45) — VOL, reservelijst", contact:"Tessa Augustijn (t.augustijn@zorgspectrum.nl)"},
+  {organisatie:"Theaterzaal de Proloog", adres:"Allemanswaard 27, 3958 KA Amerongen", gemeente:"Amerongen", regio:"Utrecht Zuid Oost", plekken:"", datum:"6 oktober 2026, 19:00-21:00 (inloop vanaf 18:30)", contact:"W. Smelt (w.smelt@hpamerongen.nl), E. van den Berg (el.vandenberg@charim.nl)"},
+  {organisatie:"De Componist (met huisarts Johan Blommestein, incl. informatiemarkt)", adres:"Diepenbrocklaan 1-1, 3438 XZ Nieuwegein", gemeente:"Nieuwegein", regio:"Lekstroom", plekken:"", datum:"9 november 2026, 15:00-16:30 (inloop vanaf 14:45) én 19:00-20:30 (inloop vanaf 18:45)", contact:"Huisarts Johan Blommestein"},
+  {organisatie:"IDEA Theater Soest (met MC Overhees en huisartsen Hellemans en Spaan)", adres:"Willaertstraat 49, Soest", gemeente:"Soest", regio:"Eemland", plekken:"", datum:"11 november 2026, 15:00-16:30 (inloop vanaf 14:45)", contact:"MC Overhees, huisartsen Hellemans en Spaan"},
+  {organisatie:"Plein 7", adres:"Kerkplein 7, Woerden", gemeente:"Woerden", regio:"Utrecht-West", plekken:"", datum:"11 november 2026, 14:30-16:30 (inloop vanaf 14:00)", contact:"Huisarts Caroline Rijnbeek"},
+  {organisatie:"Veluwehal", adres:"Nieuwe Markt 6, Barneveld", gemeente:"Barneveld", regio:"Eemland", plekken:"", datum:"26 november 2026, 19:30-21:15 (inloop vanaf 19:00)", contact:"Huisarts Vorage"},
+  {organisatie:"De Looborch — 'Jonge mensen met dementie'", adres:"Woudenbergseweg 42, 3701 BC Zeist", gemeente:"Zeist", regio:"Utrecht Zuid Oost", plekken:"", datum:"3 december 2026, 10:00-12:30", contact:""},
+  {organisatie:"De Wijngaard", adres:"Dennenweg 2, 3735 MR Bosch en Duin", gemeente:"Bosch en Duin", regio:"Utrecht Zuid Oost", plekken:"", datum:"3 december 2026, 15:00-17:00 (inloop vanaf 14:30)", contact:""}
 ];
 
 // ======= KAART =======
