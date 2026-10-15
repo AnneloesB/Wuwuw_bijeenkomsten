@@ -138,9 +138,10 @@
 
       <div class="sec">
         <div class="sec-title">Filter op jaar</div>
-        <div id="jaar-quick" style="display:flex; gap:6px; margin-bottom:8px;">
+        <div id="jaar-quick" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px;">
           <button class="btn btn-clear" onclick="selectOnlyYear('2026')">Alleen 2026</button>
           <button class="btn btn-clear" onclick="selectAllYears()">Alle jaren</button>
+          <button class="btn btn-clear" onclick="selectOnlyFuture()">Alleen toekomstig</button>
         </div>
         <div id="jaar-wrap"></div>
         <div class="filter-note" id="jaar-note">Alle jaren zichtbaar</div>
@@ -394,7 +395,7 @@ function updateJaarNote() {
   if (activeJaren.size === alleJaren.length) {
     note.textContent = 'Alle jaren zichtbaar';
   } else if (activeJaren.size === 0) {
-    note.textContent = 'Geen jaren geselecteerd';
+    note.textContent = 'Alleen toekomstige bijeenkomsten zichtbaar';
   } else {
     note.textContent = `Zichtbaar: ${[...activeJaren].sort().join(', ')}`;
   }
@@ -413,6 +414,14 @@ function selectOnlyYear(jaar) {
 function selectAllYears() {
   activeJaren = new Set(alleJaren);
   document.querySelectorAll('.jp').forEach(btn => btn.classList.remove('off'));
+  updateJaarNote();
+  applyFilters();
+}
+
+// Verbergt alle gehouden bijeenkomsten (laag 1); de toekomstige (laag 3) blijven zichtbaar
+function selectOnlyFuture() {
+  activeJaren = new Set();
+  document.querySelectorAll('.jp').forEach(btn => btn.classList.add('off'));
   updateJaarNote();
   applyFilters();
 }
